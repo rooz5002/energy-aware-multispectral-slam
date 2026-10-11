@@ -1,0 +1,5 @@
+{
+ "fig_a": "office_crossover_01, fog_severe, adaptive (tight budget), repeat 0: 20261010T204930Z_office_crossover_01_fog_severe_adaptive_0. Gaps in the thermal curves: thermal sensor off (u_TH = 0).",
+ "fig_b": "office_loop_01, fog_severe. Power = measured CPU package power + modelled sensor power. Shaded: degradation active. Static RGB: repeat 0, 20261010T163048Z_office_loop_01_fog_severe_static_rgb_0; Static thermal: repeat 0, 20261010T163501Z_office_loop_01_fog_severe_static_thermal_0; Static fusion: repeat 0, 20261010T163922Z_office_loop_01_fog_severe_static_fusion_0; Adaptive (tight budget): repeat 0, 20261010T202300Z_office_loop_01_fog_severe_adaptive_0; Adaptive (generous budget): repeat 0, 20261010T202720Z_office_loop_01_fog_severe_adaptive_0",
+ "fig_c": "Pooled over the sequences of the batch. Markers: mean over runs; error bars: one standard deviation (energy over all runs, ATE over successful runs); labels: successful runs / runs. Logarithmic ATE axis."
+}

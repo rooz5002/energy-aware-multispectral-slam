@@ -1,0 +1,8 @@
+# Replay pipeline, controller, harness and analysis (Python 3.10+; venv built with 3.12)
+numpy
+opencv-python-headless
+PyYAML
+pandas
+matplotlib
+evo
+pytest

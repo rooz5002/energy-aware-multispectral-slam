@@ -1,0 +1,19 @@
+start:
+- -5.5
+- -3.5
+- 0.0
+waypoints:
+- - 5.5
+  - -3.5
+- - 5.5
+  - 3.5
+- - -5.5
+  - 3.5
+- - -5.5
+  - -3.5
+final_yaw: 0.0
+role: evaluation
+world: office_loop
+linear_speed: 0.22
+angular_speed: 0.6
+sequence: office_loop_01

@@ -1,0 +1,32 @@
+profiles:
+  fog_moderate:
+    peak: 0.478
+    retention: 0.501
+    keypoints_clear: 1150.4
+    keypoints_at_hold: 576.6
+    B_rgb_clear: 0.148
+    B_rgb_at_hold: 0.822
+    depth_valid_fraction_clear: 1.0
+    depth_valid_fraction_at_hold: 0.831
+  fog_severe:
+    peak: 0.798
+    retention: 0.099
+    keypoints_clear: 1150.4
+    keypoints_at_hold: 114.0
+    B_rgb_clear: 0.148
+    B_rgb_at_hold: 0.863
+    depth_valid_fraction_clear: 1.0
+    depth_valid_fraction_at_hold: 0.718
+  lowlight:
+    peak: 0.804
+    retention: 0.249
+    keypoints_clear: 1150.4
+    keypoints_at_hold: 286.1
+    B_rgb_clear: 0.148
+    B_rgb_at_hold: 0.839
+    depth_valid_fraction_clear: 1.0
+    depth_valid_fraction_at_hold: 1.0
+blur_regression_check:
+  B_rgb fog_moderate < fog_severe: true
+  B_rgb lowlight > clear: true
+blur_check_passed: true

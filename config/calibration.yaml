@@ -1,0 +1,39 @@
+calibrated_on: office_loop_tune
+frames_csv_sha256: 19082863a179a5ff7f7b57278a491715c2e0ffee6b4530018ce8a529fb90d958
+frames_used: 542
+thermal_window_K:
+- 288.0
+- 320.0
+thermal_percentiles_K:
+  p0_5: 290.0714565429688
+  p99_5: 317.4584363281248
+thermal_preprocessing:
+  clahe: true
+  clahe_clip: 2.0
+  clahe_grid: 8
+v_ref:
+  rgb: 14.391659857379066
+  thermal: 23.9464164191352
+var_laplacian_spread:
+  rgb:
+    p05: 10.843158710808225
+    p95: 18.993727264573835
+  thermal:
+    p05: 4.969478298450046
+    p95: 42.194052554965545
+blur_prefilter_sigma_px: 1.0
+q_clear_mean:
+  rgb: 0.460640723934687
+  thermal: 0.39867469274759726
+q_clear_mean_run:
+  run: 20261008T152701Z_office_loop_tune_clear_static_fusion_0
+  frames: 2705
+  configuration: static_fusion
+  tracked_fraction: 1.0
+  indicator_means:
+    N_rgb: 0.4238348736906962
+    H_rgb: 0.7565818697514356
+    B_rgb: 0.05762986721082856
+    N_thermal: 0.3680776340110905
+    H_thermal: 0.7306454298269122
+    B_thermal: 0.20407266393801923

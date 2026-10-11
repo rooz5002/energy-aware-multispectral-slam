@@ -1,0 +1,19 @@
+start:
+- -7.2
+- -4.4
+- 0.0
+waypoints:
+- - 7.2
+  - -4.4
+- - 7.2
+  - 4.4
+- - -7.2
+  - 4.4
+- - -7.2
+  - -4.4
+final_yaw: 0.0
+role: evaluation
+world: industrial_hall
+linear_speed: 0.22
+angular_speed: 0.6
+sequence: industrial_hall_01

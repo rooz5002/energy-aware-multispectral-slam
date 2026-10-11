@@ -1,0 +1,28 @@
+source: 'simulation: office_loop_tune (clear)'
+frames: 271
+orb_nfeatures: 1200
+canny_thresholds:
+- 50
+- 150
+every_nth_frame: 10
+orb_keypoints:
+  rgb_mean: 1163.6863468634685
+  thermal_mean: 574.6531365313654
+  ratio_of_means: 0.4938213274395214
+  rgb_median: 1171.0
+  thermal_median: 660.0
+  median_of_frame_ratios: 0.5671902268760908
+entropy:
+  rgb_mean: 6.053849986378303
+  thermal_mean: 5.845435070791175
+  ratio_of_means: 0.9655731615325652
+  rgb_median: 6.184757706579549
+  thermal_median: 5.931159057784829
+  median_of_frame_ratios: 0.964035254088009
+edge_density:
+  rgb_mean: 0.03823948483625461
+  thermal_mean: 0.04760676122386224
+  ratio_of_means: 1.2449634566919314
+  rgb_median: 0.03843098958333333
+  thermal_median: 0.05291666666666667
+  median_of_frame_ratios: 1.2708559953141996

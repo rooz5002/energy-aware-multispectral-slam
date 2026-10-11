@@ -1,0 +1,7 @@
+# The configurations compared in the paper (guide section 8).
+static_rgb:               {rgb: true,  thermal: false, weights: fixed,    omega: {rgb: 1.0, thermal: 0.0}, scheduler: false}
+static_thermal:           {rgb: false, thermal: true,  weights: fixed,    omega: {rgb: 0.0, thermal: 1.0}, scheduler: false}
+static_fusion:            {rgb: true,  thermal: true,  weights: fixed,    omega: {rgb: 0.5, thermal: 0.5}, scheduler: false}
+adaptive:                 {rgb: true,  thermal: true,  weights: adaptive, scheduler: true}
+ablation_weighting_only:  {rgb: true,  thermal: true,  weights: adaptive, scheduler: false}
+ablation_scheduling_only: {rgb: true,  thermal: true,  weights: fixed,    omega: {rgb: 0.5, thermal: 0.5}, scheduler: true}

@@ -1,0 +1,27 @@
+source: PST900 (real, FLIR Boson AGC 8-bit + RGB)
+frames: 867
+orb_nfeatures: 1200
+canny_thresholds:
+- 50
+- 150
+orb_keypoints:
+  rgb_mean: 1058.0402406086341
+  thermal_mean: 134.70834094395371
+  ratio_of_means: 0.1273187311538011
+  rgb_median: 1123.962615488039
+  thermal_median: 29.757599553636005
+  median_of_frame_ratios: 0.02993245008305494
+entropy:
+  rgb_mean: 7.108902925922379
+  thermal_mean: 4.631442794241522
+  ratio_of_means: 0.6514989503307351
+  rgb_median: 7.283022350478401
+  thermal_median: 4.629309619545397
+  median_of_frame_ratios: 0.6547647119711525
+edge_density:
+  rgb_mean: 0.09813723910958187
+  thermal_mean: 0.004889493009415552
+  ratio_of_means: 0.049823013707934585
+  rgb_median: 0.07620725137159573
+  thermal_median: 0.0017045590953832857
+  median_of_frame_ratios: 0.020869730903075607

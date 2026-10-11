@@ -1,0 +1,24 @@
+{
+ "batch": "runs/batch_20261010T161828Z",
+ "start_utc": "2026-10-10T16:19:28.963737+00:00",
+ "end_utc": "2026-10-10T22:54:15.263882+00:00",
+ "governor": "performance",
+ "on_ac_power": true,
+ "idle_power_w": 7.112512649218852,
+ "budgets": {
+  "tight": 1.0,
+  "generous": 2.1
+ },
+ "e0_joules": {
+  "office_loop_01/clear": 5078.7963742449,
+  "office_loop_01/fog_severe": 5330.630703094901,
+  "office_loop_01/lowlight": 5307.98151355986,
+  "office_crossover_01/clear": 5238.8789692973205,
+  "office_crossover_01/fog_severe": 5074.150197287226,
+  "office_crossover_01/lowlight": 5310.779928059614
+ },
+ "runs": 90,
+ "completed": 90,
+ "crashed": 0,
+ "sensitivity_profile": "fog_severe"
+}

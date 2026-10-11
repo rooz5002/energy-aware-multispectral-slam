@@ -1,0 +1,14 @@
+start:
+- 5.5
+- 3.5
+- -1.5707963267948966
+waypoints:
+- - 5.5
+  - -3.5
+- - -5.5
+  - -3.5
+role: tuning
+world: office_loop
+linear_speed: 0.22
+angular_speed: 0.6
+sequence: office_loop_tune

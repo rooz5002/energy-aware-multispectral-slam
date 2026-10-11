@@ -1,0 +1,38 @@
+# Degradation profiles, applied to the RGB stream (and to depth for fog) at replay time.
+# onset and hold are fractions of the sequence duration. Peak severities are defined by measured RGB
+# ORB-keypoint retention at the hold on the tuning sequence (harness/calibrate_profiles.py, DECISIONS D11).
+clear:
+  kind: none
+fog_moderate:
+  kind: fog
+  onset_frac: 0.3
+  hold_frac: 0.3
+  ramp_s: 5.0
+  peak: 0.478
+  seed: 101
+  target_rgb_keypoint_retention: 0.5
+  measured_rgb_keypoint_retention: 0.501
+  measured_on: office_loop_tune
+  hold_frames_used: 82
+fog_severe:
+  kind: fog
+  onset_frac: 0.3
+  hold_frac: 0.3
+  ramp_s: 5.0
+  peak: 0.798
+  seed: 102
+  target_rgb_keypoint_retention: 0.1
+  measured_rgb_keypoint_retention: 0.099
+  measured_on: office_loop_tune
+  hold_frames_used: 82
+lowlight:
+  kind: lowlight
+  onset_frac: 0.3
+  hold_frac: 0.3
+  ramp_s: 5.0
+  peak: 0.804
+  seed: 103
+  target_rgb_keypoint_retention: 0.25
+  measured_rgb_keypoint_retention: 0.249
+  measured_on: office_loop_tune
+  hold_frames_used: 82

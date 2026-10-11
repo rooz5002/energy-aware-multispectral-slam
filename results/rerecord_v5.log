@@ -1,0 +1,272 @@
+sim/record_sequence.sh office_loop_01
+[INFO] [1791647666.074561503] [route_driver]: route finished at sim time 181.40 s, pose (-5.508, -3.435, -0.010)
+
+Files:             0_bag_2026_10_10-23_51_06.mcap
+Bag size:          12.0 GiB
+Storage id:        mcap
+ROS Distro:        lyrical
+Duration:          201.433907065s
+Start:             Oct 10 2026 23:51:06.979561019 (1791647466.979561019)
+End:               Oct 10 2026 23:54:28.413468084 (1791647668.413468084)
+Messages:          154978
+Topic information: Topic: /clock | Type: rosgraph_msgs/msg/Clock | Count: 94099 | Serialization Format: cdr
+                   Topic: /cmd_vel | Type: geometry_msgs/msg/Twist | Count: 9158 | Serialization Format: cdr
+                   Topic: /ms/depth/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 5561 | Serialization Format: cdr
+                   Topic: /ms/depth/image | Type: sensor_msgs/msg/Image | Count: 5561 | Serialization Format: cdr
+                   Topic: /ms/ground_truth | Type: nav_msgs/msg/Odometry | Count: 9177 | Serialization Format: cdr
+                   Topic: /ms/rgb/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 5562 | Serialization Format: cdr
+                   Topic: /ms/rgb/image | Type: sensor_msgs/msg/Image | Count: 5561 | Serialization Format: cdr
+                   Topic: /ms/thermal/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 5561 | Serialization Format: cdr
+                   Topic: /ms/thermal/image | Type: sensor_msgs/msg/Image | Count: 5561 | Serialization Format: cdr
+                   Topic: /odom | Type: nav_msgs/msg/Odometry | Count: 9177 | Serialization Format: cdr
+Services:          0
+Service information: 
+Actions:           0
+Action information: 
+bash -c 'source env.sh && python3 harness/export_sequence.py data/sequences/office_loop_01'
+sequence: office_loop_01
+warmup_dropped_s: 1.0
+frames_per_stream:
+  rgb: 5531
+  depth: 5531
+  thermal: 5531
+synchronised_frames: 5531
+unsynchronised_dropped:
+  rgb: 0
+  depth: 0
+  thermal: 0
+frame_interval_ms:
+  min: 32.0
+  median: 33.0
+  max: 34.0
+gaps_over_50ms: 0
+duration_s: 182.49
+ground_truth_samples: 9177
+ground_truth_at_frames: 5531
+path_length_m: 35.91668728290665
+start_end_distance_m: 0.0656440139165343
+
+depth_scale: 1000.0
+thermal_resolution_K_per_count: 0.005
+fps: 30.0
+rgb:
+  width: 640
+  height: 480
+  fx: 554.3827056884766
+  fy: 554.3827056884766
+  cx: 320.0
+  cy: 240.0
+  distortion: &id001
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+thermal:
+  width: 320
+  height: 240
+  fx: 277.1913528442383
+  fy: 277.1913528442383
+  cx: 160.0
+  cy: 120.0
+  distortion: *id001
+thermal_camera_info_as_published:
+  width: 320
+  height: 240
+  fx: 289.7056007385254
+  fy: 289.70561027526855
+  cx: 160.0
+  cy: 120.0
+  distortion:
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+T_base_cam_translation:
+- 0.069
+- -0.047
+- 0.107
+R_base_optical:
+- - 0.0
+  - 0.0
+  - 1.0
+- - -1.0
+  - 0.0
+  - 0.0
+- - 0.0
+  - -1.0
+  - 0.0
+
+env -u PYTHONPATH .venv/bin/python -m harness.check_keypoints data/sequences/office_loop_01
+sequence: office_loop_01
+orb_nfeatures: 1200
+every_nth_frame: 5
+thermal_window_K:
+- 284.0
+- 314.0
+target_keypoints: 150
+thermal_fixed_window:
+  min: 1
+  p05: 52
+  median: 174
+  mean: 182.2
+  max: 375
+  frames: 1107
+  frames_below_target: 504
+  fraction_below_target: 0.4553
+thermal_fixed_window_clahe:
+  min: 4
+  p05: 65
+  median: 223
+  mean: 224.6
+  max: 448
+  frames: 1107
+  frames_below_target: 344
+  fraction_below_target: 0.3107
+rgb:
+  min: 331
+  p05: 579
+  median: 979
+  mean: 943.3
+  max: 1124
+  frames: 1107
+  frames_below_target: 0
+  fraction_below_target: 0.0
+
+sim/record_sequence.sh office_crossover_01
+[INFO] [1791647972.844525470] [route_driver]: route finished at sim time 181.34 s, pose (-5.508, -3.435, -0.010)
+
+Files:             0_bag_2026_10_10-23_56_11.mcap
+Bag size:          12.0 GiB
+Storage id:        mcap
+ROS Distro:        lyrical
+Duration:          203.430800116s
+Start:             Oct 10 2026 23:56:11.717491797 (1791647771.717491797)
+End:               Oct 10 2026 23:59:35.148291913 (1791647975.148291913)
+Messages:          154735
+Topic information: Topic: /clock | Type: rosgraph_msgs/msg/Clock | Count: 93875 | Serialization Format: cdr
+                   Topic: /cmd_vel | Type: geometry_msgs/msg/Twist | Count: 9158 | Serialization Format: cdr
+                   Topic: /ms/depth/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 5559 | Serialization Format: cdr
+                   Topic: /ms/depth/image | Type: sensor_msgs/msg/Image | Count: 5559 | Serialization Format: cdr
+                   Topic: /ms/ground_truth | Type: nav_msgs/msg/Odometry | Count: 9174 | Serialization Format: cdr
+                   Topic: /ms/rgb/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 5559 | Serialization Format: cdr
+                   Topic: /ms/rgb/image | Type: sensor_msgs/msg/Image | Count: 5559 | Serialization Format: cdr
+                   Topic: /ms/thermal/camera_info | Type: sensor_msgs/msg/CameraInfo | Count: 5559 | Serialization Format: cdr
+                   Topic: /ms/thermal/image | Type: sensor_msgs/msg/Image | Count: 5559 | Serialization Format: cdr
+                   Topic: /odom | Type: nav_msgs/msg/Odometry | Count: 9174 | Serialization Format: cdr
+Services:          0
+Service information: 
+Actions:           0
+Action information: 
+bash -c 'source env.sh && python3 harness/export_sequence.py data/sequences/office_crossover_01'
+sequence: office_crossover_01
+warmup_dropped_s: 1.0
+frames_per_stream:
+  rgb: 5529
+  depth: 5529
+  thermal: 5529
+synchronised_frames: 5529
+unsynchronised_dropped:
+  rgb: 0
+  depth: 0
+  thermal: 0
+frame_interval_ms:
+  min: 32.0
+  median: 33.0
+  max: 34.0
+gaps_over_50ms: 0
+duration_s: 182.424
+ground_truth_samples: 9174
+ground_truth_at_frames: 5529
+path_length_m: 35.91669780496292
+start_end_distance_m: 0.06565256111706608
+
+depth_scale: 1000.0
+thermal_resolution_K_per_count: 0.005
+fps: 30.0
+rgb:
+  width: 640
+  height: 480
+  fx: 554.3827056884766
+  fy: 554.3827056884766
+  cx: 320.0
+  cy: 240.0
+  distortion: &id001
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+thermal:
+  width: 320
+  height: 240
+  fx: 277.1913528442383
+  fy: 277.1913528442383
+  cx: 160.0
+  cy: 120.0
+  distortion: *id001
+thermal_camera_info_as_published:
+  width: 320
+  height: 240
+  fx: 289.7056007385254
+  fy: 289.70561027526855
+  cx: 160.0
+  cy: 120.0
+  distortion:
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+T_base_cam_translation:
+- 0.069
+- -0.047
+- 0.107
+R_base_optical:
+- - 0.0
+  - 0.0
+  - 1.0
+- - -1.0
+  - 0.0
+  - 0.0
+- - 0.0
+  - -1.0
+  - 0.0
+
+env -u PYTHONPATH .venv/bin/python -m harness.check_keypoints data/sequences/office_crossover_01
+sequence: office_crossover_01
+orb_nfeatures: 1200
+every_nth_frame: 5
+thermal_window_K:
+- 284.0
+- 314.0
+target_keypoints: 150
+thermal_fixed_window:
+  min: 0
+  p05: 0
+  median: 73
+  mean: 105.4
+  max: 351
+  frames: 1106
+  frames_below_target: 791
+  fraction_below_target: 0.7152
+thermal_fixed_window_clahe:
+  min: 0
+  p05: 0
+  median: 92
+  mean: 132.9
+  max: 404
+  frames: 1106
+  frames_below_target: 698
+  fraction_below_target: 0.6311
+rgb:
+  min: 301
+  p05: 579
+  median: 978
+  mean: 943.1
+  max: 1125
+  frames: 1106
+  frames_below_target: 0
+  fraction_below_target: 0.0
+

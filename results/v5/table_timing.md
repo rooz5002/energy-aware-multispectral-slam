@@ -1,0 +1,7 @@
+| configuration | runs | mean tracking time per frame (ms) | 95th percentile, mean over runs (ms) | 95th percentile, worst run (ms) | largest lag behind 30 Hz (s), worst run | runs with lag > 1 frame (33 ms) |
+|---|---|---|---|---|---|---|
+| Static RGB | 18 | 7.9 | 11.1 | 11.7 | 0.011 | 0 |
+| Static thermal | 18 | 7.7 | 11.2 | 12.2 | 0.005 | 0 |
+| Static fusion | 18 | 11.6 | 14.9 | 15.6 | 0.004 | 0 |
+| Adaptive (tight budget) | 18 | 9.6 | 13.6 | 14.2 | 0.0 | 0 |
+| Adaptive (generous budget) | 18 | 11.9 | 15.0 | 15.3 | 0.001 | 0 |

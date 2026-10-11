@@ -1,0 +1,27 @@
+# config/sensors.yaml — sensor models and power values (see DECISIONS.md, D1)
+
+rgbd:
+  model: Intel RealSense D435
+  provides: [rgb, depth]
+  resolution: [640, 480]
+  rate_hz: 30
+  power_w: 2.0            # nominal; Intel multi-camera guidance (~2 W per D400 camera)
+  power_range_w: [1.5, 3.5]
+  always_on: true         # required for RGB-D mode in every configuration
+  sources:
+    - https://support.realsenseai.com/hc/en-us/community/posts/7428579234067/comments/7430741133459
+    - https://docs.clearpathrobotics.com/docs/robots/accessories/sensors/cameras/realsense_d435   # 3.5 W maximum
+
+thermal:
+  model: Teledyne FLIR Boson 320
+  resolution: [320, 256]
+  rate_hz: 30             # 60 Hz baseline, 30 Hz runtime selectable
+  power_w: 0.6            # "starting at 600 mW" (product page)
+  power_range_w: [0.5, 1.0]   # datasheet "as low as 500 mW"; upper bound for sensitivity
+  always_on: false        # switched by u_TH(t)
+  noise:
+    netd_k: 0.05          # verify against current Boson datasheet
+    fixed_pattern_sigma_k: 0.02
+    optics_blur_sigma_px: 0.7
+  sources:
+    - https://www.oem.flir.com/products/boson/

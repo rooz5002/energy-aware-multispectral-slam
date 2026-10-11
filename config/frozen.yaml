@@ -1,0 +1,48 @@
+# FROZEN parameters (DECISIONS D5). Do not edit: evaluation runs use this file.
+status: frozen
+quality:
+  alpha: 0.4
+  beta: 0.4
+  gamma: 0.2
+scheduler:
+  tau_Q: 0.6
+  tau_E1: 0.5
+  tau_E2: 0.25
+  hysteresis: 0.02
+  min_dwell_s: 2.0
+  thermal_priority_weight: 0.7
+  n_min_per_modality: 50
+  thermal_off_rule: true
+  recovery_hold_s: 2.0
+  levels:
+  - name: normal
+    n_features: 1200
+    min_keyframe_interval: 0
+    local_ba: true
+    loop_closure: full
+  - name: energy_saving
+    n_features: 800
+    min_keyframe_interval: 30
+    local_ba: true
+    loop_closure: reduced
+    local_ba_every: 1
+  - name: tracking_priority
+    n_features: 700
+    min_keyframe_interval: 60
+    local_ba: true
+    loop_closure: 'off'
+    local_ba_every: 1
+    frame_stride: 2
+energy:
+  source: measured
+  budgets:
+  - tight
+  - generous
+frozen:
+  utc: '2026-10-08T23:44:46+00:00'
+  tuned_on: office_loop_tune
+  selected_setting: q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2
+  written_at_commit: 31fb276a6fa7ce5d24f01f08f0731996ac3cefbd
+  constraints_met: false
+  tuning_log: tuning/log.csv
+  tuning_summary: tuning/summary.json

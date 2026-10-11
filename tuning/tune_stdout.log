@@ -1,0 +1,245 @@
+reference: static fusion
+measuring idle package power for 60 s ...
+  [reference] static static_fusion clear rep 0: E 2761 J, ATE 0.006873388989865109, tracked 1.000
+  [reference] static static_fusion fog_moderate rep 0: E 2600 J, ATE 0.0171840543564142, tracked 1.000
+  [reference] static static_fusion fog_severe rep 0: E 2646 J, ATE 0.010445401706999684, tracked 1.000
+  [reference] static static_fusion lowlight rep 0: FAILED
+  [reference] static static_fusion clear rep 1: E 2735 J, ATE 0.007895260409509958, tracked 1.000
+  [reference] static static_fusion fog_moderate rep 1: FAILED
+  [reference] static static_fusion fog_severe rep 1: E 2715 J, ATE 0.024289618510851593, tracked 1.000
+  [reference] static static_fusion lowlight rep 1: E 2655 J, ATE 0.03888413859252221, tracked 1.000
+  [reference] static static_fusion clear rep 2: E 2724 J, ATE 0.006284903684360822, tracked 1.000
+  [reference] static static_fusion fog_moderate rep 2: E 2703 J, ATE 0.03748409958122747, tracked 1.000
+  [reference] static static_fusion fog_severe rep 2: E 2691 J, ATE 0.01921659797172685, tracked 1.000
+  [reference] static static_fusion lowlight rep 2: E 2575 J, ATE 0.013001951544856847, tracked 1.000
+stage 1: tau_Q
+  [stage1] q0.5_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive clear rep 0: E 2191 J, ATE 0.026109133764620533, tracked 1.000
+  [stage1] q0.5_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive fog_moderate rep 0: E 2298 J, ATE 0.016891471674825194, tracked 1.000
+  [stage1] q0.5_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive fog_severe rep 0: E 2275 J, ATE 0.02059655894087734, tracked 1.000
+  [stage1] q0.5_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive lowlight rep 0: E 2234 J, ATE 0.04432800614754082, tracked 1.000
+  [stage1] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive clear rep 0: E 2203 J, ATE 0.02833233681370966, tracked 1.000
+  [stage1] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive fog_moderate rep 0: E 2306 J, ATE 0.014569812163806626, tracked 1.000
+  [stage1] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive fog_severe rep 0: E 2285 J, ATE 0.018158800010590576, tracked 1.000
+  [stage1] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive lowlight rep 0: E 2402 J, ATE 0.031728706507517794, tracked 1.000
+  [stage1] q0.7_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive clear rep 0: E 2218 J, ATE 0.022574763487072637, tracked 1.000
+  [stage1] q0.7_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive fog_moderate rep 0: E 2317 J, ATE 0.016307841746036267, tracked 1.000
+  [stage1] q0.7_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive fog_severe rep 0: E 2299 J, ATE 0.029960806361460493, tracked 1.000
+  [stage1] q0.7_e0.6-0.3_f800-600_k15-30_ba1_off1_s1 adaptive lowlight rep 0: E 2253 J, ATE 0.03933151605364221, tracked 1.000
+stage 2: energy levers (tau_Q = 0.6)
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba1_off0_s1 adaptive clear rep 0: E 2400 J, ATE 0.029266702185087333, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba1_off0_s1 adaptive fog_moderate rep 0: E 2454 J, ATE 0.036570926448693114, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba1_off0_s1 adaptive fog_severe rep 0: E 2478 J, ATE 0.027398279090433353, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba1_off0_s1 adaptive lowlight rep 0: E 2461 J, ATE 0.03449132743080038, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off0_s2 adaptive clear rep 0: E 2266 J, ATE 0.012862253307360296, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off0_s2 adaptive fog_moderate rep 0: E 2245 J, ATE 0.02298882198181929, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off0_s2 adaptive fog_severe rep 0: E 2260 J, ATE 0.026937338921270648, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off0_s2 adaptive lowlight rep 0: E 2207 J, ATE 0.04214820934451333, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k15-30_ba2_off0_s1 adaptive clear rep 0: E 2450 J, ATE 0.00945155941667103, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k15-30_ba2_off0_s1 adaptive fog_moderate rep 0: E 2470 J, ATE 0.021468243682027016, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k15-30_ba2_off0_s1 adaptive fog_severe rep 0: E 2543 J, ATE 0.016994208096272678, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k15-30_ba2_off0_s1 adaptive lowlight rep 0: E 2418 J, ATE 0.034374387621590625, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-700_k15-30_ba1_off0_s2 adaptive clear rep 0: E 2400 J, ATE 0.011367943486116095, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-700_k15-30_ba1_off0_s2 adaptive fog_moderate rep 0: E 2303 J, ATE 0.022746110840786118, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-700_k15-30_ba1_off0_s2 adaptive fog_severe rep 0: E 2330 J, ATE 0.025956295180059902, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-700_k15-30_ba1_off0_s2 adaptive lowlight rep 0: E 2317 J, ATE 0.05132571908175886, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-600_k15-30_ba2_off1_s2 adaptive clear rep 0: E 2433 J, ATE 0.024877738474723743, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-600_k15-30_ba2_off1_s2 adaptive fog_moderate rep 0: E 2561 J, ATE 0.004836547411127458, tracked 0.513
+  [stage2] q0.6_e0.6-0.3_f600-600_k15-30_ba2_off1_s2 adaptive fog_severe rep 0: E 2341 J, ATE 0.005067880817832896, tracked 0.496
+  [stage2] q0.6_e0.6-0.3_f600-600_k15-30_ba2_off1_s2 adaptive lowlight rep 0: E 2168 J, ATE 0.03475117596341864, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-600_k15-30_ba2_off1_s2 adaptive clear rep 0: E 2424 J, ATE 0.027554079618171346, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-600_k15-30_ba2_off1_s2 adaptive fog_moderate rep 0: E 2570 J, ATE 0.024602232408583665, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-600_k15-30_ba2_off1_s2 adaptive fog_severe rep 0: E 2560 J, ATE 0.022924982539484887, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-600_k15-30_ba2_off1_s2 adaptive lowlight rep 0: E 2522 J, ATE 0.04475789748689441, tracked 0.518
+  [stage2] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off1_s2 adaptive clear rep 0: E 2243 J, ATE 0.022297378413991396, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off1_s2 adaptive fog_moderate rep 0: E 2188 J, ATE 0.01836076217303966, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off1_s2 adaptive fog_severe rep 0: E 2174 J, ATE 0.0237862775925335, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k15-30_ba1_off1_s2 adaptive lowlight rep 0: E 2116 J, ATE 0.02467815524719306, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off0_s2 adaptive clear rep 0: E 2287 J, ATE 0.024943047338076788, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off0_s2 adaptive fog_moderate rep 0: E 2282 J, ATE 0.02191815591474176, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off0_s2 adaptive fog_severe rep 0: E 2295 J, ATE 0.023151084837757307, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off0_s2 adaptive lowlight rep 0: E 2264 J, ATE 0.04152411061196754, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k15-30_ba2_off0_s1 adaptive clear rep 0: E 2434 J, ATE 0.006838665481306032, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k15-30_ba2_off0_s1 adaptive fog_moderate rep 0: E 2493 J, ATE 0.02102448108170091, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k15-30_ba2_off0_s1 adaptive fog_severe rep 0: E 2470 J, ATE 0.022100997731987947, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k15-30_ba2_off0_s1 adaptive lowlight rep 0: E 2428 J, ATE 0.040233094369411984, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive clear rep 0: E 2176 J, ATE 0.006738413175626415, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive fog_moderate rep 0: E 2240 J, ATE 0.015823994451684722, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive fog_severe rep 0: E 2256 J, ATE 0.040144084082515775, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive lowlight rep 0: E 2170 J, ATE 0.018578448962576093, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off1_s2 adaptive clear rep 0: E 2149 J, ATE 0.013994551924441457, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off1_s2 adaptive fog_moderate rep 0: E 2234 J, ATE 0.019599196041230033, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off1_s2 adaptive fog_severe rep 0: E 2212 J, ATE 0.035393651485853855, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off1_s2 adaptive lowlight rep 0: E 2168 J, ATE 0.02939485861566666, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k30-60_ba1_off0_s2 adaptive clear rep 0: E 2215 J, ATE 0.020348881540535678, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k30-60_ba1_off0_s2 adaptive fog_moderate rep 0: E 2194 J, ATE 0.03409258715752522, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k30-60_ba1_off0_s2 adaptive fog_severe rep 0: E 2206 J, ATE 0.029460545698853494, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f800-600_k30-60_ba1_off0_s2 adaptive lowlight rep 0: E 2185 J, ATE 0.03312086999369121, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-600_k30-60_ba1_off1_s1 adaptive clear rep 0: E 2126 J, ATE 0.010067571439310651, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-600_k30-60_ba1_off1_s1 adaptive fog_moderate rep 0: E 2243 J, ATE 0.025090745584176642, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-600_k30-60_ba1_off1_s1 adaptive fog_severe rep 0: E 2256 J, ATE 0.03299402733407663, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-600_k30-60_ba1_off1_s1 adaptive lowlight rep 0: E 2213 J, ATE 0.03683053624232495, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba2_off1_s2 adaptive clear rep 0: E 2175 J, ATE 0.02063438540939442, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba2_off1_s2 adaptive fog_moderate rep 0: E 2258 J, ATE 0.01867020852706141, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba2_off1_s2 adaptive fog_severe rep 0: E 2257 J, ATE 0.011624084960703112, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba2_off1_s2 adaptive lowlight rep 0: E 2212 J, ATE 0.030925089647886053, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive clear rep 0: E 2146 J, ATE 0.00824586339002377, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive fog_moderate rep 0: E 2211 J, ATE 0.02948064864138922, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive fog_severe rep 0: E 2221 J, ATE 0.01611545438211446, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive lowlight rep 0: E 2140 J, ATE 0.02056313203928623, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba1_off1_s1 adaptive clear rep 0: E 2208 J, ATE 0.014136067706693492, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba1_off1_s1 adaptive fog_moderate rep 0: E 2409 J, ATE 0.014218795991992461, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba1_off1_s1 adaptive fog_severe rep 0: E 2310 J, ATE 0.03370295089929763, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba1_off1_s1 adaptive lowlight rep 0: FAILED
+  [stage2] q0.6_e0.6-0.3_f600-700_k15-30_ba1_off0_s1 adaptive clear rep 0: E 2381 J, ATE 0.023363432891180782, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-700_k15-30_ba1_off0_s1 adaptive fog_moderate rep 0: E 2419 J, ATE 0.016983419087038546, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-700_k15-30_ba1_off0_s1 adaptive fog_severe rep 0: E 2408 J, ATE 0.02008780461383575, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-700_k15-30_ba1_off0_s1 adaptive lowlight rep 0: E 2366 J, ATE 0.03142375744793398, tracked 0.542
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off0_s2 adaptive clear rep 0: E 2309 J, ATE 0.015901505091561977, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off0_s2 adaptive fog_moderate rep 0: E 2296 J, ATE 0.015330952969189208, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off0_s2 adaptive fog_severe rep 0: E 2309 J, ATE 0.03448762653126809, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off0_s2 adaptive lowlight rep 0: E 2255 J, ATE 0.04831296470806335, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-600_k15-30_ba2_off0_s2 adaptive clear rep 0: E 2207 J, ATE 0.01661035849199256, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-600_k15-30_ba2_off0_s2 adaptive fog_moderate rep 0: E 2223 J, ATE 0.02703265785277763, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-600_k15-30_ba2_off0_s2 adaptive fog_severe rep 0: E 2216 J, ATE 0.01608956194730539, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-600_k15-30_ba2_off0_s2 adaptive lowlight rep 0: E 2175 J, ATE 0.05247450308805551, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-700_k30-60_ba2_off1_s2 adaptive clear rep 0: E 2045 J, ATE 0.01013405787860974, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-700_k30-60_ba2_off1_s2 adaptive fog_moderate rep 0: E 2101 J, ATE 0.025642790945689126, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-700_k30-60_ba2_off1_s2 adaptive fog_severe rep 0: E 2122 J, ATE 0.02538649010800305, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f600-700_k30-60_ba2_off1_s2 adaptive lowlight rep 0: E 2081 J, ATE 0.035231031453334546, tracked 0.491
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba2_off0_s1 adaptive clear rep 0: E 2424 J, ATE 0.007543927273858799, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba2_off0_s1 adaptive fog_moderate rep 0: E 2460 J, ATE 0.0180838595416034, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba2_off0_s1 adaptive fog_severe rep 0: E 2454 J, ATE 0.04693321269526838, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba2_off0_s1 adaptive lowlight rep 0: FAILED
+  [stage2] q0.6_e0.5-0.25_f1000-700_k15-30_ba1_off0_s2 adaptive clear rep 0: E 2355 J, ATE 0.011805598736349935, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-700_k15-30_ba1_off0_s2 adaptive fog_moderate rep 0: E 2371 J, ATE 0.020466557021124397, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-700_k15-30_ba1_off0_s2 adaptive fog_severe rep 0: E 2383 J, ATE 0.0074141315158133955, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-700_k15-30_ba1_off0_s2 adaptive lowlight rep 0: E 2305 J, ATE 0.020570448347471917, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba1_off1_s1 adaptive clear rep 0: E 2270 J, ATE 0.016489647459487354, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba1_off1_s1 adaptive fog_moderate rep 0: FAILED
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba1_off1_s1 adaptive fog_severe rep 0: E 2371 J, ATE 0.02831384062504214, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k15-30_ba1_off1_s1 adaptive lowlight rep 0: E 2260 J, ATE 0.022836515185114863, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive clear rep 0: E 2237 J, ATE 0.00718402039614193, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive fog_moderate rep 0: E 2425 J, ATE 0.022477393111953944, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive fog_severe rep 0: E 2340 J, ATE 0.024017039258782888, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive lowlight rep 0: E 2246 J, ATE 0.024719234364891693, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k15-30_ba2_off1_s1 adaptive clear rep 0: E 2233 J, ATE 0.014897356897094026, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k15-30_ba2_off1_s1 adaptive fog_moderate rep 0: E 2344 J, ATE 0.009068666110030384, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k15-30_ba2_off1_s1 adaptive fog_severe rep 0: E 2317 J, ATE 0.05470541866001536, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-700_k15-30_ba2_off1_s1 adaptive lowlight rep 0: E 2254 J, ATE 0.011214811040861949, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-700_k30-60_ba1_off1_s1 adaptive clear rep 0: E 2148 J, ATE 0.011259406390254927, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-700_k30-60_ba1_off1_s1 adaptive fog_moderate rep 0: E 2271 J, ATE 0.021039869483993254, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-700_k30-60_ba1_off1_s1 adaptive fog_severe rep 0: E 2269 J, ATE 0.03266745721307701, tracked 1.000
+  [stage2] q0.6_e0.6-0.3_f1000-700_k30-60_ba1_off1_s1 adaptive lowlight rep 0: E 2208 J, ATE 0.03445244835219609, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f800-700_k15-30_ba2_off0_s2 adaptive clear rep 0: E 2305 J, ATE 0.00837858716376706, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f800-700_k15-30_ba2_off0_s2 adaptive fog_moderate rep 0: E 2287 J, ATE 0.010358569128208494, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f800-700_k15-30_ba2_off0_s2 adaptive fog_severe rep 0: E 2338 J, ATE 0.02021228518194268, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f800-700_k15-30_ba2_off0_s2 adaptive lowlight rep 0: E 2328 J, ATE 0.04557967513459759, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k15-30_ba2_off0_s2 adaptive clear rep 0: E 2325 J, ATE 0.010535655204732913, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k15-30_ba2_off0_s2 adaptive fog_moderate rep 0: E 2349 J, ATE 0.014394345417509507, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-600_k15-30_ba2_off0_s2 adaptive fog_severe rep 0: FAILED
+  [stage2] q0.6_e0.5-0.25_f1000-600_k15-30_ba2_off0_s2 adaptive lowlight rep 0: E 2300 J, ATE 0.03360632004526857, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-700_k15-30_ba2_off0_s2 adaptive clear rep 0: E 2311 J, ATE 0.011637538288732905, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-700_k15-30_ba2_off0_s2 adaptive fog_moderate rep 0: E 2356 J, ATE 0.005571940843128455, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-700_k15-30_ba2_off0_s2 adaptive fog_severe rep 0: E 2351 J, ATE 0.020822356219165034, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f1000-700_k15-30_ba2_off0_s2 adaptive lowlight rep 0: E 2301 J, ATE 0.04264950101745831, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off0_s1 adaptive clear rep 0: E 2387 J, ATE 0.01990333783435409, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off0_s1 adaptive fog_moderate rep 0: E 2498 J, ATE 0.027435486854677674, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off0_s1 adaptive fog_severe rep 0: E 2452 J, ATE 0.02093538193199179, tracked 1.000
+  [stage2] q0.6_e0.5-0.25_f600-600_k30-60_ba2_off0_s1 adaptive lowlight rep 0: E 2388 J, ATE 0.05134212385229522, tracked 1.000
+stage 3: confirm the best settings
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive clear rep 0: E 2156 J, ATE 0.009009769249737223, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive fog_moderate rep 0: E 2197 J, ATE 0.026795278205988243, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive fog_severe rep 0: E 2210 J, ATE 0.031639769972318786, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive lowlight rep 0: E 2181 J, ATE 0.03893290191518095, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive clear rep 0: E 2180 J, ATE 0.006846722148502811, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive fog_moderate rep 0: E 2261 J, ATE 0.02250367796992832, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive fog_severe rep 0: E 2266 J, ATE 0.022175403727417303, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive lowlight rep 0: E 2184 J, ATE 0.022092012310848532, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive clear rep 0: E 2236 J, ATE 0.008794393958760931, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive fog_moderate rep 0: E 2369 J, ATE 0.01991130334236523, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive fog_severe rep 0: E 2348 J, ATE 0.03722443202904371, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive lowlight rep 0: E 2326 J, ATE 0.026065358668312038, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive clear rep 1: E 2157 J, ATE 0.014890439454453282, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive fog_moderate rep 1: E 2213 J, ATE 0.0157268635134991, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive fog_severe rep 1: E 2217 J, ATE 0.019125116993240338, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive lowlight rep 1: E 2160 J, ATE 0.022923797491479454, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive clear rep 1: E 2174 J, ATE 0.008184682089297641, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive fog_moderate rep 1: E 2226 J, ATE 0.03876560430682242, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive fog_severe rep 1: E 2258 J, ATE 0.028886279668456156, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive lowlight rep 1: E 2210 J, ATE 0.04287537906630316, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive clear rep 1: E 2239 J, ATE 0.006642986973119679, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive fog_moderate rep 1: E 2317 J, ATE 0.00934038509770095, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive fog_severe rep 1: E 2397 J, ATE 0.02938771980508903, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive lowlight rep 1: E 2292 J, ATE 0.03208747236256249, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive clear rep 2: E 2155 J, ATE 0.012125338290773358, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive fog_moderate rep 2: E 2218 J, ATE 0.022466316888652874, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive fog_severe rep 2: E 2221 J, ATE 0.026693757112787892, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f600-700_k30-60_ba2_off1_s2 adaptive lowlight rep 2: E 2172 J, ATE 0.023923079617731307, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive clear rep 2: E 2181 J, ATE 0.007836974259856555, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive fog_moderate rep 2: E 2248 J, ATE 0.016902999792230623, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive fog_severe rep 2: E 2252 J, ATE 0.031499646171394446, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2 adaptive lowlight rep 2: E 2171 J, ATE 0.017528712134053926, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive clear rep 2: E 2250 J, ATE 0.0065596259196828415, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive fog_moderate rep 2: E 2401 J, ATE 0.023330685711465942, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive fog_severe rep 2: E 2333 J, ATE 0.013276831851807848, tracked 1.000
+  [stage3] q0.6_e0.5-0.25_f1000-600_k30-60_ba1_off1_s1 adaptive lowlight rep 2: E 2317 J, ATE 0.042836592724972665, tracked 1.000
+{
+ "setting": "q0.6_e0.5-0.25_f800-700_k30-60_ba1_off1_s2",
+ "values": {
+  "tau_E": [
+   0.5,
+   0.25
+  ],
+  "l1_features": 800,
+  "l2_features": 700,
+  "kf_interval": [
+   30,
+   60
+  ],
+  "ba_every": 1,
+  "thermal_off": true,
+  "l2_stride": 2,
+  "tau_Q": 0.6
+ },
+ "violations": 1,
+ "constraints_met": false,
+ "energy_sum_j": 8870.366818666665,
+ "static_fusion_energy_sum_j": 10690.147375999999,
+ "saving_vs_static_fusion": 0.17022969780742658,
+ "detail": {
+  "clear": {
+   "energy_j": 2178.282269,
+   "ate_m": 0.007622792832552336,
+   "ate_limit_m": 0.00771963613070316,
+   "tracked": 1.0,
+   "ate_violation": false,
+   "tracked_violation": false
+  },
+  "fog_moderate": {
+   "energy_j": 2245.128416,
+   "ate_m": 0.02605742735632712,
+   "ate_limit_m": 0.030067484665702922,
+   "tracked": 1.0,
+   "ate_violation": false,
+   "tracked_violation": false
+  },
+  "fog_severe": {
+   "energy_j": 2258.5330776666665,
+   "ate_m": 0.027520443189089302,
+   "ate_limit_m": 0.019782260002845314,
+   "tracked": 1.0,
+   "ate_violation": true,
+   "tracked_violation": false
+  },
+  "lowlight": {
+   "energy_j": 2188.423056,
+   "ate_m": 0.027498701170401874,
+   "ate_limit_m": 0.028537349575558483,
+   "tracked": 1.0,
+   "ate_violation": false,
+   "tracked_violation": false
+  }
+ },
+ "uses_reduced_processing_rate": true
+}
+wrote config/frozen.yaml

@@ -1,0 +1,12 @@
+| cfg | profile | loss_events | median_t_s | mean_severity | at_level_0 | at_level_1 | at_level_2 | thermal_off | new_map |
+|---|---|---|---|---|---|---|---|---|---|
+| adaptive/generous | lowlight | 3 | 88.408 | 0.8039999999999999 | 3 | 0 | 0 | 0 | 3 |
+| adaptive/tight | clear | 8 | 179.45499999999998 | 0.0 | 0 | 1 | 7 | 6 | 2 |
+| adaptive/tight | fog_severe | 11 | 179.522 | 0.0 | 0 | 1 | 10 | 7 | 1 |
+| adaptive/tight | lowlight | 15 | 179.488 | 0.1608 | 3 | 2 | 10 | 8 | 9 |
+| static_fusion | lowlight | 3 | 87.848 | 0.8039999999999999 | 3 | 0 | 0 | 0 | 3 |
+| static_rgb | fog_severe | 6 | 63.065 | 0.798 | 6 | 0 | 0 | 6 | 6 |
+| static_rgb | lowlight | 6 | 60.094 | 0.6994639199999995 | 6 | 0 | 0 | 6 | 6 |
+| static_thermal | clear | 11 | 87.914 | 0.0 | 11 | 0 | 0 | 0 | 11 |
+| static_thermal | fog_severe | 10 | 87.864 | 0.2394 | 10 | 0 | 0 | 0 | 10 |
+| static_thermal | lowlight | 11 | 87.814 | 0.21927272727272726 | 11 | 0 | 0 | 0 | 11 |

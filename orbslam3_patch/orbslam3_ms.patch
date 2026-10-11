@@ -1,0 +1,635 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 016e743..d478552 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 2.8)
++cmake_minimum_required(VERSION 3.10)
+ project(ORB_SLAM3)
+ 
+ IF(NOT CMAKE_BUILD_TYPE)
+@@ -17,7 +17,7 @@ include(CheckCXXCompilerFlag)
+ CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+ CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+ if(COMPILER_SUPPORTS_CXX11)
+-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
++   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+    add_definitions(-DCOMPILEDWITHC11)
+    message(STATUS "Using flag -std=c++11.")
+ elseif(COMPILER_SUPPORTS_CXX0X)
+@@ -39,7 +39,20 @@ MESSAGE("OPENCV VERSION:")
+ MESSAGE(${OpenCV_VERSION})
+ 
+ find_package(Eigen3 3.1.0 REQUIRED)
+-find_package(Pangolin REQUIRED)
++option(ORBSLAM3_MULTISPECTRAL "RGB-thermal feature pooling and run-time control hooks (MS_SLAM)" ON)
++if(ORBSLAM3_MULTISPECTRAL)
++   add_definitions(-DMS_SLAM)
++endif()
++option(ORBSLAM3_HEADLESS "Build without Pangolin; Viewer and MapDrawer become no-op stubs" ON)
++option(ORBSLAM3_BUILD_EXAMPLES "Build the example executables (rgbd_tum only when headless)" ON)
++if(ORBSLAM3_HEADLESS)
++   set(Pangolin_INCLUDE_DIRS ${PROJECT_SOURCE_DIR}/headless)
++   set(Pangolin_LIBRARIES "")
++   set(ORBSLAM3_VIEWER_SOURCES src/HeadlessStubs.cc)
++else()
++   find_package(Pangolin REQUIRED)
++   set(ORBSLAM3_VIEWER_SOURCES src/MapDrawer.cc src/Viewer.cc)
++endif()
+ find_package(realsense2)
+ 
+ include_directories(
+@@ -54,6 +67,7 @@ ${Pangolin_INCLUDE_DIRS}
+ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+ 
+ add_library(${PROJECT_NAME} SHARED
++src/MSControl.cc
+ src/System.cc
+ src/Tracking.cc
+ src/LocalMapping.cc
+@@ -66,12 +80,11 @@ src/MapPoint.cc
+ src/KeyFrame.cc
+ src/Atlas.cc
+ src/Map.cc
+-src/MapDrawer.cc
++${ORBSLAM3_VIEWER_SOURCES}
+ src/Optimizer.cc
+ src/Frame.cc
+ src/KeyFrameDatabase.cc
+ src/Sim3Solver.cc
+-src/Viewer.cc
+ src/ImuTypes.cc
+ src/G2oTypes.cc
+ src/CameraModels/Pinhole.cpp
+@@ -137,6 +150,14 @@ endif()
+ 
+ 
+ # Build examples
++if(ORBSLAM3_BUILD_EXAMPLES AND ORBSLAM3_HEADLESS)
++   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/RGB-D)
++   add_executable(rgbd_tum Examples/RGB-D/rgbd_tum.cc)
++   target_link_libraries(rgbd_tum ${PROJECT_NAME})
++endif()
++
++if(ORBSLAM3_BUILD_EXAMPLES AND NOT ORBSLAM3_HEADLESS)
++
+ 
+ # RGB-D examples
+ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/RGB-D)
+@@ -388,3 +409,5 @@ if(realsense2_FOUND)
+             Examples_old/Stereo-Inertial/stereo_inertial_realsense_D435i.cc)
+     target_link_libraries(stereo_inertial_realsense_D435i_old ${PROJECT_NAME})
+ endif()
++
++endif()
+diff --git a/headless/pangolin/pangolin.h b/headless/pangolin/pangolin.h
+new file mode 100644
+index 0000000..5b4d961
+--- /dev/null
++++ b/headless/pangolin/pangolin.h
+@@ -0,0 +1,13 @@
++// Minimal stand-in for <pangolin/pangolin.h> used when ORBSLAM3_HEADLESS is ON.
++// Only the types that appear in ORB-SLAM3 headers are declared; nothing is drawn.
++#pragma once
++
++typedef unsigned char GLubyte;
++
++namespace pangolin
++{
++struct OpenGlMatrix
++{
++    double m[16];
++};
++}
+diff --git a/include/Frame.h b/include/Frame.h
+index 572073f..84564e2 100644
+--- a/include/Frame.h
++++ b/include/Frame.h
+@@ -73,6 +73,10 @@ public:
+     // Extract ORB on the image. 0 for left image and 1 for right image.
+     void ExtractORB(int flag, const cv::Mat &im, const int x0, const int x1);
+ 
++    // MS_SLAM: extract ORB from the RGB image and from the thermal image in MSControl with their own
++    // budgets and pool them. Descriptors get a 33rd byte holding the modality (see MSControl.h).
++    void ExtractORBMS(const cv::Mat &imGray);
++
+     // Compute Bag of Words representation.
+     void ComputeBoW();
+ 
+diff --git a/include/MSControl.h b/include/MSControl.h
+new file mode 100644
+index 0000000..67c6563
+--- /dev/null
++++ b/include/MSControl.h
+@@ -0,0 +1,70 @@
++/**
++* Multispectral / energy-aware control interface added to ORB-SLAM3 (compiled when MS_SLAM is defined).
++*
++* A single process-wide control block that the caller sets before every System::TrackRGBD call and that
++* Tracking, LocalMapping and LoopClosing read. It carries the thermal image of the current frame and the
++* run-time switches of the energy-aware scheduler. See orbslam3_patch/ORBSLAM3_CHANGES.md.
++*/
++
++#ifndef MSCONTROL_H
++#define MSCONTROL_H
++
++#include <atomic>
++#include <opencv2/core/core.hpp>
++
++namespace ORB_SLAM3
++{
++
++enum MSModality { MS_RGB = 0, MS_THERMAL = 1 };
++
++// Descriptors are stored as 33 bytes: the 32-byte ORB descriptor followed by the modality tag.
++const int MS_DESCRIPTOR_BYTES = 32;
++const int MS_TAG_COLUMN = 32;
++
++enum MSLoopClosureMode { MS_LC_FULL = 0, MS_LC_REDUCED = 1, MS_LC_OFF = 2 };
++
++// In "reduced" mode place recognition is attempted for one keyframe in this many,
++// and no global bundle adjustment is launched after a loop correction.
++const int MS_LC_REDUCED_EVERY = 3;
++
++struct MSControl
++{
++    // ORB feature budget of each modality for the next frame (0 = modality not used).
++    std::atomic<int> nFeaturesRGB{-1};      // -1: keep the value from the settings file
++    std::atomic<int> nFeaturesThermal{0};
++    // Minimum number of frames between keyframes (0 = ORB-SLAM3's own policy only).
++    std::atomic<int> minKeyFrameInterval{0};
++    std::atomic<bool> localBA{true};
++    // Run local bundle adjustment for one keyframe in this many (1 = every keyframe).
++    std::atomic<int> localBAEvery{1};
++    std::atomic<int> loopClosureMode{MS_LC_FULL};
++
++    // Thermal image of the next frame: 8-bit, single channel, same size and intrinsics as the RGB image.
++    // Written and read by the tracking thread only.
++    cv::Mat thermal;
++
++    static MSControl& Get();
++};
++
++// Per-frame feedback for the controller (filled by System::GetMSFrameStats).
++struct MSFrameStats
++{
++    int nKeys[2] = {0, 0};        // extracted keypoints per modality
++    int nInliers[2] = {0, 0};     // keypoints matched to a map point and not rejected as outliers
++    bool keyFrame = false;        // a keyframe was created from this frame
++    int trackingState = 0;        // Tracking::eTrackingState
++    int nMaps = 0;
++    long unsigned mapId = 0;      // Atlas id of the map this frame was tracked in
++    long unsigned nKeyFramesInMap = 0;
++    // control values that were applied to this frame
++    int appliedFeaturesRGB = 0;
++    int appliedFeaturesThermal = 0;
++    int appliedMinKeyFrameInterval = 0;
++    bool appliedLocalBA = true;
++    int appliedLocalBAEvery = 1;
++    int appliedLoopClosureMode = 0;
++};
++
++} // namespace ORB_SLAM3
++
++#endif // MSCONTROL_H
+diff --git a/include/ORBextractor.h b/include/ORBextractor.h
+index bb7aace..836386a 100644
+--- a/include/ORBextractor.h
++++ b/include/ORBextractor.h
+@@ -58,6 +58,14 @@ public:
+                     std::vector<cv::KeyPoint>& _keypoints,
+                     cv::OutputArray _descriptors, std::vector<int> &vLappingArea);
+ 
++    // MS_SLAM: change the number of features extracted per frame at run time.
++    void SetNFeatures(int n);
++    int inline GetNFeatures(){
++        return nfeatures;}
++    // MS_SLAM: a second extractor with the same pyramid and FAST thresholds (used for the thermal image).
++    ORBextractor* Clone(){
++        return new ORBextractor(nfeatures, scaleFactor, nlevels, iniThFAST, minThFAST);}
++
+     int inline GetLevels(){
+         return nlevels;}
+ 
+diff --git a/include/System.h b/include/System.h
+index 872c86e..aac59c1 100644
+--- a/include/System.h
++++ b/include/System.h
+@@ -39,6 +39,7 @@
+ #include "Viewer.h"
+ #include "ImuTypes.h"
+ #include "Settings.h"
++#include "MSControl.h"
+ 
+ 
+ namespace ORB_SLAM3
+@@ -174,6 +175,10 @@ public:
+     // Information from most recent processed frame
+     // You can call this right after TrackMonocular (or stereo or RGBD)
+     int GetTrackingState();
++    // MS_SLAM: per-modality keypoint and inlier counts of the most recent frame, and applied control values.
++    MSFrameStats GetMSFrameStats();
++    // MS_SLAM: final trajectory of every frame over ALL maps: "t tx ty tz qx qy qz qw map_id" (Twc, in each map's own frame).
++    void SaveTrajectoryAllMapsMS(const string &filename);
+     std::vector<MapPoint*> GetTrackedMapPoints();
+     std::vector<cv::KeyPoint> GetTrackedKeyPointsUn();
+ 
+diff --git a/include/Tracking.h b/include/Tracking.h
+index 863c98e..3a55054 100644
+--- a/include/Tracking.h
++++ b/include/Tracking.h
+@@ -314,6 +314,10 @@ protected:
+ 
+     //Current matches in frame
+     int mnMatchesInliers;
++public:
++    // MS_SLAM: frame id from which the last keyframe was created
++    unsigned int GetLastKeyFrameFrameId() const { return mnLastKeyFrameId; }
++protected:
+ 
+     //Last Frame, KeyFrame and Relocalisation Info
+     KeyFrame* mpLastKeyFrame;
+diff --git a/src/Frame.cc b/src/Frame.cc
+index a04c312..48f9e8d 100644
+--- a/src/Frame.cc
++++ b/src/Frame.cc
+@@ -17,6 +17,7 @@
+ */
+ 
+ #include "Frame.h"
++#include "MSControl.h"
+ 
+ #include "G2oTypes.h"
+ #include "MapPoint.h"
+@@ -219,7 +220,11 @@ Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeSt
+ #ifdef REGISTER_TIMES
+     std::chrono::steady_clock::time_point time_StartExtORB = std::chrono::steady_clock::now();
+ #endif
++#ifdef MS_SLAM
++    ExtractORBMS(imGray);
++#else
+     ExtractORB(0,imGray,0,0);
++#endif
+ #ifdef REGISTER_TIMES
+     std::chrono::steady_clock::time_point time_EndExtORB = std::chrono::steady_clock::now();
+ 
+@@ -424,6 +429,49 @@ void Frame::ExtractORB(int flag, const cv::Mat &im, const int x0, const int x1)
+         monoRight = (*mpORBextractorRight)(im,cv::Mat(),mvKeysRight,mDescriptorsRight,vLapping);
+ }
+ 
++void Frame::ExtractORBMS(const cv::Mat &imGray)
++{
++    MSControl &ctrl = MSControl::Get();
++    vector<int> vLapping = {0,0};
++
++    vector<cv::KeyPoint> vKeys[2];
++    cv::Mat descriptors[2];
++
++    int nRGB = ctrl.nFeaturesRGB;
++    if(nRGB < 0)
++        nRGB = mpORBextractorLeft->GetNFeatures();
++    const int nThermal = ctrl.thermal.empty() ? 0 : (int)ctrl.nFeaturesThermal;
++
++    if(nRGB > 0)
++    {
++        mpORBextractorLeft->SetNFeatures(nRGB);
++        monoLeft = (*mpORBextractorLeft)(imGray,cv::Mat(),vKeys[MS_RGB],descriptors[MS_RGB],vLapping);
++    }
++    if(nThermal > 0)
++    {
++        // one thermal extractor per process, same pyramid and thresholds as the RGB extractor
++        static ORBextractor* pThermalExtractor = mpORBextractorLeft->Clone();
++        pThermalExtractor->SetNFeatures(nThermal);
++        (*pThermalExtractor)(ctrl.thermal,cv::Mat(),vKeys[MS_THERMAL],descriptors[MS_THERMAL],vLapping);
++    }
++
++    const int nTotal = vKeys[MS_RGB].size() + vKeys[MS_THERMAL].size();
++    mvKeys.clear();
++    mvKeys.reserve(nTotal);
++    mDescriptors = cv::Mat(nTotal, MS_DESCRIPTOR_BYTES + 1, CV_8U);
++    int row = 0;
++    for(int m = 0; m < 2; m++)
++    {
++        for(size_t i = 0; i < vKeys[m].size(); i++, row++)
++        {
++            mvKeys.push_back(vKeys[m][i]);
++            memcpy(mDescriptors.ptr<uchar>(row), descriptors[m].ptr<uchar>(i), MS_DESCRIPTOR_BYTES);
++            mDescriptors.at<uchar>(row, MS_TAG_COLUMN) = (uchar)m;
++        }
++    }
++    monoLeft = nTotal;
++}
++
+ bool Frame::isSet() const {
+     return mbIsSet;
+ }
+diff --git a/src/HeadlessStubs.cc b/src/HeadlessStubs.cc
+new file mode 100644
+index 0000000..d213b12
+--- /dev/null
++++ b/src/HeadlessStubs.cc
+@@ -0,0 +1,38 @@
++// No-op implementations of Viewer and MapDrawer for headless builds (ORBSLAM3_HEADLESS).
++// System must be constructed with bUseViewer = false; the viewer thread is never started.
++
++#include "Viewer.h"
++#include "MapDrawer.h"
++
++#include <iostream>
++
++namespace ORB_SLAM3
++{
++
++Viewer::Viewer(System* pSystem, FrameDrawer* pFrameDrawer, MapDrawer* pMapDrawer, Tracking* pTracking,
++               const string&, Settings*)
++    : both(false), mpSystem(pSystem), mpFrameDrawer(pFrameDrawer), mpMapDrawer(pMapDrawer), mpTracker(pTracking),
++      mbFinishRequested(false), mbFinished(true), mbStopped(true), mbStopRequested(false)
++{
++    std::cerr << "ORB-SLAM3 was built headless: the viewer is not available." << std::endl;
++}
++
++void Viewer::newParameterLoader(Settings*) {}
++void Viewer::Run() {}
++void Viewer::RequestFinish() {}
++void Viewer::RequestStop() {}
++bool Viewer::isFinished() { return true; }
++bool Viewer::isStopped() { return true; }
++bool Viewer::isStepByStep() { return false; }
++void Viewer::Release() {}
++
++MapDrawer::MapDrawer(Atlas* pAtlas, const string&, Settings*) : mpAtlas(pAtlas) {}
++void MapDrawer::newParameterLoader(Settings*) {}
++void MapDrawer::DrawMapPoints() {}
++void MapDrawer::DrawKeyFrames(const bool, const bool, const bool, const bool) {}
++void MapDrawer::DrawCurrentCamera(pangolin::OpenGlMatrix&) {}
++void MapDrawer::SetCurrentCameraPose(const Sophus::SE3f&) {}
++void MapDrawer::SetReferenceKeyFrame(KeyFrame*) {}
++void MapDrawer::GetCurrentOpenGLCameraMatrix(pangolin::OpenGlMatrix&, pangolin::OpenGlMatrix&) {}
++
++} // namespace ORB_SLAM3
+diff --git a/src/LocalMapping.cc b/src/LocalMapping.cc
+index 53df332..6761e16 100644
+--- a/src/LocalMapping.cc
++++ b/src/LocalMapping.cc
+@@ -18,6 +18,7 @@
+ 
+ 
+ #include "LocalMapping.h"
++#include "MSControl.h"
+ #include "LoopClosing.h"
+ #include "ORBmatcher.h"
+ #include "Optimizer.h"
+@@ -123,7 +124,13 @@ void LocalMapping::Run()
+ 
+             if(!CheckNewKeyFrames() && !stopRequested())
+             {
++#ifdef MS_SLAM
++                static unsigned long nMSLocalBACandidates = 0;
++                const int nMSEvery = std::max(1, (int)MSControl::Get().localBAEvery);
++                if(mpAtlas->KeyFramesInMap()>2 && MSControl::Get().localBA && (nMSLocalBACandidates++ % nMSEvery) == 0)
++#else
+                 if(mpAtlas->KeyFramesInMap()>2)
++#endif
+                 {
+ 
+                     if(mbInertial && mpCurrentKeyFrame->GetMap()->isImuInitialized())
+diff --git a/src/LoopClosing.cc b/src/LoopClosing.cc
+index 319afb5..fb4d38c 100644
+--- a/src/LoopClosing.cc
++++ b/src/LoopClosing.cc
+@@ -18,6 +18,7 @@
+ 
+ 
+ #include "LoopClosing.h"
++#include "MSControl.h"
+ 
+ #include "Sim3Solver.h"
+ #include "Converter.h"
+@@ -98,6 +99,26 @@ void LoopClosing::Run()
+         //----------------------------
+ 
+ 
++#ifdef MS_SLAM
++        if(CheckNewKeyFrames())
++        {
++            // Loop closure "off": keyframes are only added to the place-recognition database.
++            // "reduced": place recognition for one keyframe in MS_LC_REDUCED_EVERY.
++            static unsigned long nMSQueued = 0;
++            const int nMode = MSControl::Get().loopClosureMode;
++            if(nMode == MS_LC_OFF || (nMode == MS_LC_REDUCED && (nMSQueued++ % MS_LC_REDUCED_EVERY) != 0))
++            {
++                KeyFrame* pSkippedKF;
++                {
++                    unique_lock<mutex> lock(mMutexLoopQueue);
++                    pSkippedKF = mlpLoopKeyFrameQueue.front();
++                    mlpLoopKeyFrameQueue.pop_front();
++                }
++                mpKeyFrameDB->add(pSkippedKF);
++                continue;
++            }
++        }
++#endif
+         if(CheckNewKeyFrames())
+         {
+             if(mpLastCurrentKF)
+@@ -1196,7 +1217,12 @@ void LoopClosing::CorrectLoop()
+     mpCurrentKF->AddLoopEdge(mpLoopMatchedKF);
+ 
+     // Launch a new thread to perform Global Bundle Adjustment (Only if few keyframes, if not it would take too much time)
++#ifdef MS_SLAM
++    if(MSControl::Get().loopClosureMode == MS_LC_FULL &&
++       (!pLoopMap->isImuInitialized() || (pLoopMap->KeyFramesInMap()<200 && mpAtlas->CountMaps()==1)))
++#else
+     if(!pLoopMap->isImuInitialized() || (pLoopMap->KeyFramesInMap()<200 && mpAtlas->CountMaps()==1))
++#endif
+     {
+         mbRunningGBA = true;
+         mbFinishedGBA = false;
+diff --git a/src/MSControl.cc b/src/MSControl.cc
+new file mode 100644
+index 0000000..df85e13
+--- /dev/null
++++ b/src/MSControl.cc
+@@ -0,0 +1,12 @@
++#include "MSControl.h"
++
++namespace ORB_SLAM3
++{
++
++MSControl& MSControl::Get()
++{
++    static MSControl instance;
++    return instance;
++}
++
++} // namespace ORB_SLAM3
+diff --git a/src/ORBextractor.cc b/src/ORBextractor.cc
+index 970b7cc..96d9833 100644
+--- a/src/ORBextractor.cc
++++ b/src/ORBextractor.cc
+@@ -406,6 +406,24 @@ namespace ORB_SLAM3
+                     -1,-6, 0,-11/*mean (0.127148), correlation (0.547401)*/
+             };
+ 
++    void ORBextractor::SetNFeatures(int n)
++    {
++        if(n == nfeatures)
++            return;
++        nfeatures = n;
++        // same distribution over pyramid levels as in the constructor
++        float factor = 1.0f / scaleFactor;
++        float nDesiredFeaturesPerScale = nfeatures*(1 - factor)/(1 - (float)pow((double)factor, (double)nlevels));
++        int sumFeatures = 0;
++        for( int level = 0; level < nlevels-1; level++ )
++        {
++            mnFeaturesPerLevel[level] = cvRound(nDesiredFeaturesPerScale);
++            sumFeatures += mnFeaturesPerLevel[level];
++            nDesiredFeaturesPerScale *= factor;
++        }
++        mnFeaturesPerLevel[nlevels-1] = std::max(nfeatures - sumFeatures, 0);
++    }
++
+     ORBextractor::ORBextractor(int _nfeatures, float _scaleFactor, int _nlevels,
+                                int _iniThFAST, int _minThFAST):
+             nfeatures(_nfeatures), scaleFactor(_scaleFactor), nlevels(_nlevels),
+diff --git a/src/ORBmatcher.cc b/src/ORBmatcher.cc
+index 9129683..1c6ecc0 100644
+--- a/src/ORBmatcher.cc
++++ b/src/ORBmatcher.cc
+@@ -2057,6 +2057,11 @@ namespace ORB_SLAM3
+ // http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
+     int ORBmatcher::DescriptorDistance(const cv::Mat &a, const cv::Mat &b)
+     {
++#ifdef MS_SLAM
++        // Descriptors of different modalities never match: the 33rd byte is the modality tag (MSControl.h).
++        if(a.cols > 32 && b.cols > 32 && a.ptr<uchar>()[32] != b.ptr<uchar>()[32])
++            return 256;
++#endif
+         const int *pa = a.ptr<int32_t>();
+         const int *pb = b.ptr<int32_t>();
+ 
+diff --git a/src/Sim3Solver.cc b/src/Sim3Solver.cc
+index b8d3abf..e594e60 100644
+--- a/src/Sim3Solver.cc
++++ b/src/Sim3Solver.cc
+@@ -364,8 +364,17 @@ void Sim3Solver::ComputeSim3(Eigen::Matrix3f &P1, Eigen::Matrix3f &P2)
+     // Rotation angle. sin is the norm of the imaginary part, cos is the real part
+     double ang=atan2(vec.norm(),evec(0,maxIndex));
+ 
+-    vec = 2*ang*vec/vec.norm(); //Angle-axis representation. quaternion angle is the half
+-    mR12i = Sophus::SO3f::exp(vec).matrix();
++    // MS_SLAM: a degenerate sample (coincident points, or a rotation of exactly zero) gives vec.norm() == 0
++    // and a NaN angle-axis vector, on which Sophus aborts the whole process. Zero rotation is the correct
++    // limit; a non-finite sample yields no inliers and is rejected by RANSAC as usual.
++    const float vecNorm = vec.norm();
++    if(std::isfinite(vecNorm) && vecNorm > 1e-12f && std::isfinite(ang))
++    {
++        vec = 2*ang*vec/vecNorm; //Angle-axis representation. quaternion angle is the half
++        mR12i = Sophus::SO3f::exp(vec).matrix();
++    }
++    else
++        mR12i = Eigen::Matrix3f::Identity();
+ 
+     // Step 5: Rotate set 2
+     Eigen::Matrix3f P3 = mR12i*Pr2;
+diff --git a/src/System.cc b/src/System.cc
+index 60d9c51..d91f288 100644
+--- a/src/System.cc
++++ b/src/System.cc
+@@ -1318,6 +1318,70 @@ void System::SaveDebugData(const int &initIdx)
+ }
+ 
+ 
++void System::SaveTrajectoryAllMapsMS(const string &filename)
++{
++    // Same reconstruction as SaveTrajectoryTUM (relative pose to the reference keyframe, after all
++    // optimisation), but for every map of the Atlas and without moving the origin to the first keyframe.
++    ofstream f;
++    f.open(filename.c_str());
++    f << fixed;
++    list<ORB_SLAM3::KeyFrame*>::iterator lRit = mpTracker->mlpReferences.begin();
++    list<double>::iterator lT = mpTracker->mlFrameTimes.begin();
++    list<bool>::iterator lbL = mpTracker->mlbLost.begin();
++    for(list<Sophus::SE3f>::iterator lit=mpTracker->mlRelativeFramePoses.begin(),
++        lend=mpTracker->mlRelativeFramePoses.end();lit!=lend;lit++, lRit++, lT++, lbL++)
++    {
++        if(*lbL)
++            continue;
++        KeyFrame* pKF = *lRit;
++        if(!pKF)
++            continue;
++        Sophus::SE3f Trw;
++        while(pKF->isBad() && pKF->GetParent())
++        {
++            Trw = Trw * pKF->mTcp;
++            pKF = pKF->GetParent();
++        }
++        if(pKF->isBad() || !pKF->GetMap())
++            continue;
++        Trw = Trw * pKF->GetPose();
++        Sophus::SE3f Twc = ((*lit) * Trw).inverse();
++        Eigen::Vector3f twc = Twc.translation();
++        Eigen::Quaternionf q = Twc.unit_quaternion();
++        f << setprecision(6) << *lT << " " << setprecision(9) << twc(0) << " " << twc(1) << " " << twc(2) << " "
++          << q.x() << " " << q.y() << " " << q.z() << " " << q.w() << " " << pKF->GetMap()->GetId() << endl;
++    }
++    f.close();
++}
++
++MSFrameStats System::GetMSFrameStats()
++{
++    // Called from the thread that calls TrackRGBD, right after it returns.
++    MSFrameStats s;
++    const Frame &F = mpTracker->mCurrentFrame;
++    const bool bTagged = F.mDescriptors.cols > MS_TAG_COLUMN;
++    for(int i = 0; i < F.N && i < F.mDescriptors.rows; i++)
++    {
++        const int m = bTagged ? F.mDescriptors.at<uchar>(i, MS_TAG_COLUMN) : MS_RGB;
++        s.nKeys[m]++;
++        if(i < (int)F.mvpMapPoints.size() && F.mvpMapPoints[i] && !F.mvbOutlier[i])
++            s.nInliers[m]++;
++    }
++    s.keyFrame = (mpTracker->GetLastKeyFrameFrameId() == F.mnId);
++    s.trackingState = mpTracker->mState;
++    s.nMaps = mpAtlas->CountMaps();
++    s.mapId = mpAtlas->GetCurrentMap()->GetId();
++    s.nKeyFramesInMap = mpAtlas->KeyFramesInMap();
++    MSControl &c = MSControl::Get();
++    s.appliedFeaturesRGB = c.nFeaturesRGB;
++    s.appliedFeaturesThermal = c.thermal.empty() ? 0 : (int)c.nFeaturesThermal;
++    s.appliedMinKeyFrameInterval = c.minKeyFrameInterval;
++    s.appliedLocalBA = c.localBA;
++    s.appliedLocalBAEvery = c.localBAEvery;
++    s.appliedLoopClosureMode = c.loopClosureMode;
++    return s;
++}
++
+ int System::GetTrackingState()
+ {
+     unique_lock<mutex> lock(mMutexState);
+diff --git a/src/Tracking.cc b/src/Tracking.cc
+index 5191451..257d2a8 100644
+--- a/src/Tracking.cc
++++ b/src/Tracking.cc
+@@ -18,6 +18,7 @@
+ 
+ 
+ #include "Tracking.h"
++#include "MSControl.h"
+ 
+ #include "ORBmatcher.h"
+ #include "FrameDrawer.h"
+@@ -3063,6 +3064,13 @@ bool Tracking::TrackLocalMap()
+ 
+ bool Tracking::NeedNewKeyFrame()
+ {
++#ifdef MS_SLAM
++    {
++        const int nMinInterval = MSControl::Get().minKeyFrameInterval;
++        if(nMinInterval > 0 && mCurrentFrame.mnId < mnLastKeyFrameId + nMinInterval)
++            return false;
++    }
++#endif
+     if((mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_STEREO || mSensor == System::IMU_RGBD) && !mpAtlas->GetCurrentMap()->isImuInitialized())
+     {
+         if (mSensor == System::IMU_MONOCULAR && (mCurrentFrame.mTimeStamp-mpLastKeyFrame->mTimeStamp)>=0.25)

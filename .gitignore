@@ -1,0 +1,23 @@
+# recorded data, run outputs, external datasets (D15)
+data/
+runs/
+sensors/
+*.mcap
+# generated
+sim/worlds/*.sdf
+sim/textures/*.png
+sim/models/turtlebot3_common/
+sim/models/tb3_waffle_ms/
+third_party/
+orbslam3_patch/python/build/
+harness/*.so
+tuning/params/
+tuning/dev_log.csv
+results/quality_trace/
+results/runs.csv
+results/table_*.csv
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/

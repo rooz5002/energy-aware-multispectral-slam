@@ -1,0 +1,37 @@
+# Sensor power constants P_m (watts) for Eq. 3, and the thermal camera model applied at replay.
+# Values and sources fixed in docs/DECISIONS.md (D1, D2).
+status: verified
+rgbd:
+  power_w: 2.0
+  sensitivity_range_w:
+  - 1.5
+  - 3.5
+  part: Intel RealSense D435 (RGB and depth are one unit; on in every configuration)
+  source:
+  - 'Intel multi-camera guidance, about 2 W per D400 camera: https://support.realsenseai.com/hc/en-us/community/posts/7428579234067/comments/7430741133459'
+  - 'Clearpath D435 specification, 3.5 W maximum: https://docs.clearpathrobotics.com/docs/robots/accessories/sensors/cameras/realsense_d435'
+thermal:
+  power_w: 0.6
+  sensitivity_range_w:
+  - 0.5
+  - 1.0
+  part: Teledyne FLIR Boson 320-class LWIR core (simulated at 320x240)
+  source:
+  - 'Boson product page, starting at 600 mW: https://www.oem.flir.com/products/boson/'
+  - Boson datasheet, as low as 500 mW
+thermal_model:
+  blur_sigma_px: 0.7
+  netd_k: 0.05
+  fixed_pattern_k: 0.02
+  seed: 7
+thermal_variants:
+  thermal_sparse:
+    blur_sigma_px: 1.5
+    contrast_gain: 0.236
+    contrast_pivot_k: 304.0
+    target_keypoint_ratio: 0.13
+    measured_keypoint_ratio: 0.13
+    thermal_keypoints: 151.2
+    rgb_keypoints: 1164.2
+    measured_on: office_loop_tune (clear)
+    note: D14 robustness check only; the recorded scene is unchanged
